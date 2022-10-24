@@ -6,8 +6,17 @@
           <div class="card-header">Проверка ИНН в ВТБ</div>
           <div class="card-body">
             <label for="inn" class="hidden-visually">ИНН: </label>
-            <input type="number" name="inn" @change="newInn" id="inn" v-model="inn" />
-            <button type="button" class="saccess" @click="checkInn">Проверить</button>
+            <input
+              type="number"
+              class="border"
+              name="inn"
+              @change="newInn"
+              id="inn"
+              v-model="inn"
+            />
+            <button type="button" class="saccess" @click="checkInn">
+              Проверить
+            </button>
             <div>{{ message }}</div>
           </div>
         </div>
@@ -20,9 +29,7 @@
 import axios from "axios";
 export default {
   name: "InnCheck",
-  mounted() {
-
-  },
+  mounted() {},
   data: () => ({
     inn: "",
     message: "",
@@ -36,7 +43,8 @@ export default {
       axios
         .get("api/CheckInn/" + self.inn)
         .then((res) => {
-          console.log(res.data.message);
+          self.message = self.inn + ' - ' + res.data.message;
+          self.inn = "";
         })
         .catch((error) => console.log(error));
     },
